@@ -1,0 +1,12 @@
+{
+  "name": "sing-box-node-merger",
+  "version": "1.0.0",
+  "description": "A simple tool for merging sing-box subscription nodes.",
+  "main": "merge.js",
+  "scripts": {
+    "start": "node merge.js"
+  },
+  "type": "module",
+  "author": "june",
+  "license": "ISC"
+}
