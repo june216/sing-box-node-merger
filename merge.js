@@ -1,5 +1,28 @@
 import { writeFileSync } from 'fs';
-import { fetch_nodes, fetch_data } from './data-fetch.js';
+
+const fetch_nodes = async (subscriptions) => {
+    let nodes = []
+    if (typeof subscriptions === 'string') {
+        subscriptions = [subscriptions];
+    }
+    for (let i = 0; i < subscriptions.length; i++) {
+        nodes = nodes.concat((await fetch_data(subscriptions[i])).outbounds)
+    }
+    return nodes
+}
+
+
+const fetch_data = async (path) => {
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+        // remote
+        const response = await fetch(path);
+        return await response.json();
+    } else {
+        // local
+        const data = await fs.readFile(path, 'utf-8');
+        return JSON.parse(data);
+    }
+}
 
 // const config = JSON.parse(readFileSync('./config.json', 'utf8'))
 const config = await fetch_data('./config.json')
