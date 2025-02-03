@@ -1,4 +1,4 @@
-const outbounds= [
+const policy = [
     {
         "tag": "Mode",
         "outbounds": [
@@ -61,32 +61,32 @@ let singboxProxies = await produceArtifact({
 
 const merge = async () => {
 
-let nodes = singboxProxies;
-let sing_box_config = JSON.parse($content);
-let outbounds = outbounds;
+    let nodes = singboxProxies;
+    let sing_box_config = JSON.parse($content);
+    let outbounds = policy;
 
-//extract tags
-let tags = [];
-for (let i = 0; i < nodes.length; i++) {
-    tags.push(nodes[i].tag);
-}
-
-//filter outbounds
-for (let i = 0; i < outbounds.length; i++) {
-    if (outbounds[i].regex) {
-        let regex_1 = new RegExp(outbounds[i].regex);
-        outbounds[i].outbounds = tags.filter(function (item) { return regex_1.test(item); });
-        delete outbounds[i].regex;
+    //extract tags
+    let tags = [];
+    for (let i = 0; i < nodes.length; i++) {
+        tags.push(nodes[i].tag);
     }
-}
 
-//merge nodes
-outbounds = outbounds.concat(nodes);
+    //filter outbounds
+    for (let i = 0; i < outbounds.length; i++) {
+        if (outbounds[i].regex) {
+            let regex_1 = new RegExp(outbounds[i].regex);
+            outbounds[i].outbounds = tags.filter(function (item) { return regex_1.test(item); });
+            delete outbounds[i].regex;
+        }
+    }
 
-//merge outbounds
-sing_box_config.outbounds = outbounds;
+    //merge nodes
+    outbounds = outbounds.concat(nodes);
 
-return sing_box_config
+    //merge outbounds
+    sing_box_config.outbounds = outbounds;
+
+    return sing_box_config
 }
 
 // JSON
