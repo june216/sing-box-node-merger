@@ -1,12 +1,10 @@
-# sing-box-node-merger
+# sing-box-sub-merger
 
 [中文文档](./README_zh-cn.md)
 
-A simple tool for merging and managing sing-box subscription nodes, supporting multiple subscription links.
+A [Sub-Store](https://github.com/sub-store-org/Sub-Store) script for merging subscription nodes to the remote hosted Sing-Box config file.
 
 ## Functions
-
-📥 Multiple Subscriptions Support: Extract nodes from multiple sing-box format subscription links.
 
 🛠️ Nodes Filter：Filter nodes with regex.
 
@@ -20,135 +18,28 @@ A simple tool for merging and managing sing-box subscription nodes, supporting m
 
 ### Preparation
 
-Node.js
-
-npm
-
-### Installation Procedure
-
-```bash
-git clone https://github.com/your-username/SingBox-SubMerger.git
-cd sing-box-node-merger
-```
+Sub-Store
 
 ## Usage
 
-### 1. compelete config.json
+Create a new file in Sub-Store File
 
-Add your subscription links in `config.json` , sing-box format supported.
+  ![image1.png](./assets/image1.png)
 
-Fill out ``config_directory`` and ``output_directory``
+Fill in the link to the remotely hosted file at `URL`
 
-Customize ``outbounds`` as you need.
+  ![image2.png](./assets/image2.png)
 
-```json
-{
-  "subscriptions": [
-    "https://example.com/sub1",
-    "https://example.com/sub2"
-  ],
-  "config_directory":"./sing-box-config.json",
-  "output_directory": "./sing-box-config.json",
-  "outbounds":[]
-}
-```
-
-### 2. Start
-
-```bash
-npm start
-```
-
-### 3. Use the output config file
-
-Copy the output file to sing-box working directory and restart sing-box service.
-
+Copy the content of `merge.js` to `Script`. Press save.
+  
+  ![image3.png](./assets/image3.png)
+  
 ## Configuration
 
-`config.json` explanation
-
-- subscriptions: An array of subscription links. You can ignore the JSON Array [] tag when the content is only one item both local and remote url are supported.
-- config_directory: The url link of config file. Both local and remote url are supported).
-- output_directory: The directory to place the output file.
-- outbounds: [Outbounds in sing-box configuration](https://sing-box.sagernet.org/configuration/outbound). Regular expressions are supported for filtering nodes, and the **complete** configuration from the original configuration file must be included. For details, refer to[Sample](#sample)。
+- outbounds: [Outbounds in Sing-Box configuration](https://sing-box.sagernet.org/configuration/outbound). Regular expressions are supported for filtering nodes, and the **complete** configuration from the original configuration file must be included.
 
 > You can manually specify nodes using the outbounds field as in the original sing-box configuration, or use the regex field to filter nodes. **If both outbounds and regex fields are used simultaneously, the outbounds field will be ignored.**
 
 ## License
 
 This project is open-sourced under the ISC License.
-
-## Sample
-
-Here is an example of a subscription node format:
-
-``` json
-{
-  "outbounds": [
-    {
-      "type": "vmess",
-      "tag": "node-1",
-      "server": "example.com",
-      "port": 443,
-      "uuid": "your-uuid",
-      "alterId": 0,
-      "security": "auto"
-    },
-    {
-      "type": "trojan",
-      "tag": "node-2",
-      "server": "example.org",
-      "port": 443,
-      "password": "your-password"
-    }
-  ]
-}
-```
-
-Here is an example of the outbounds field format:
-
-```json
-"outbounds": [
-        {
-            "tag": "Proxy",
-            "outbounds": [
-                "HK",
-                "Japan",
-                "Singapore",
-                "US",
-                "Others",
-                "direct"
-            ],
-            "type": "selector"
-        },
-        {
-            "tag": "direct",
-            "type": "direct"
-        },
-        {
-            "tag": "HK",
-            "regex": "hongkong",
-            "type": "selector"
-        },
-        {
-            "tag": "Japan",
-            "regex": "japan",
-            "type": "selector"
-        },
-        {
-            "tag": "Singapore",
-            "regex": "singapore",
-            "type": "selector"
-        },
-        {
-            "tag": "US",
-            "regex": "us",
-            "type": "selector"
-        },
-        {
-            "tag": "Others",
-            "regex": "^(?!.*(hongkong|japan|us|singapore)).*$",
-            "type": "selector"
-        }
-    ]
-```
