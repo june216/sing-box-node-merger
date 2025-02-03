@@ -53,10 +53,10 @@ const outbounds= [
     }
 ]
 let singboxProxies = await produceArtifact({
-type: 'subscription', // type: 'subscription' 或 'collection'
-name: 'ikuuu', // subscription name
-platform: 'sing-box', // target platform
-produceType: 'internal' // 'internal' produces an Array, otherwise produces a String( JSON.parse('JSON String') )
+    type: 'subscription', // type: 'subscription' 或 'collection'
+    name: 'ikuuu', // subscription name
+    platform: 'sing-box', // target platform
+    produceType: 'internal' // 'internal' produces an Array, otherwise produces a String( JSON.parse('JSON String') )
 })
 
 const merge = async () => {
